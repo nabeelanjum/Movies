@@ -1,12 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { MoviesList } from '../screens';
+import { MovieDetails, MoviesList } from '../screens';
+import { MainStackRoutes } from './routes';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'MoviesList'} component={MoviesList} />
+      <Stack.Screen name={MainStackRoutes.Home} component={MoviesList} />
+      <Stack.Screen name={MainStackRoutes.MovieDetails} component={MovieDetails} />
     </Stack.Navigator>
   );
 }
