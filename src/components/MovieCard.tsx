@@ -18,7 +18,10 @@ const MovieCard: React.FC<Props> = (props) => {
   } = props;
 
   return (
-    <Pressable onPress={() => onPress?.()} style={styles.container}>
+    <Pressable
+      onPress={() => onPress?.()}
+      style={({ pressed }) => [styles.container, pressed && { opacity: 0.6 }]}
+    >
       <ImageBackground
         source={{ uri: posterPath }}
         style={styles.posterContainer}
