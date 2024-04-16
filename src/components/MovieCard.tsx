@@ -1,8 +1,7 @@
 import React from 'react';
 import { ImageBackground, Pressable, StyleSheet } from 'react-native';
-import Overlay from './common/Overlay';
-import AppText from './common/AppText';
 import colors from '../common/colors';
+import { AppText, Overlay } from '.';
 
 interface Props {
   posterPath: string;
