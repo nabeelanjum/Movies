@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Movie } from '../../networking/MovieSDK';
 
 interface MovieState {
-  randomMovies: Movie[];
+  movies: Movie[];
   selectedMovie: Movie | null;
 }
 
 const initialState: MovieState = {
-  randomMovies: [],
+  movies: [],
   selectedMovie: null,
 };
 
@@ -16,7 +16,7 @@ const movieSlice = createSlice({
   initialState,
   reducers: {
     setRandomMovies(state, action: PayloadAction<Movie[]>) {
-      state.randomMovies = action.payload;
+      state.movies = action.payload;
     },
     setSelectedMovie(state, action: PayloadAction<Movie | null>) {
       state.selectedMovie = action.payload;
