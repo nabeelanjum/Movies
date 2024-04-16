@@ -1,4 +1,4 @@
 export const MainStackRoutes = {
-  Home: "Home",
-  MovieDetails: "MovieDetails",
+  Home: 'Home',
+  MovieDetails: 'MovieDetails',
 }
