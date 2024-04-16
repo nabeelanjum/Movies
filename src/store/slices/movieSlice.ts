@@ -15,7 +15,7 @@ const movieSlice = createSlice({
   name: 'movie',
   initialState,
   reducers: {
-    setRandomMovies(state, action: PayloadAction<Movie[]>) {
+    setMovies(state, action: PayloadAction<Movie[]>) {
       state.movies = action.payload;
     },
     setSelectedMovie(state, action: PayloadAction<Movie | null>) {
@@ -24,6 +24,6 @@ const movieSlice = createSlice({
   },
 });
 
-export const { setRandomMovies, setSelectedMovie } = movieSlice.actions;
+export const { setMovies, setSelectedMovie } = movieSlice.actions;
 
 export default movieSlice.reducer;

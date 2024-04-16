@@ -1,25 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { Searchbar } from 'react-native-paper';
 
-import { RootState } from '../../store';
-import { setRandomMovies } from '../../store/slices/movieSlice';
-import movieSDK from '../../networking/MovieSDK';
 import { MovieCard } from '../../components';
+import useMovies from '../../hooks/useMovies';
 
 const MoviesList: React.FC = () => {
 
-  const dispatch = useDispatch();
-  const movies = useSelector((state: RootState) => state.movie.movies);
-
-  useEffect(() => {
-    movieSDK.fetchMovies()
-      .then((movies) => dispatch(setRandomMovies(movies)))
-      .catch(error => console.error('Error fetching random movies:', error));
-  }, []);
+  const { isLoading, fetchMovies, searchQuery, setSearchQuery, movies } = useMovies();
 
   return (
     <View style={styles.container}>
+      <Searchbar
+        style={{ margin: 15 }}
+        placeholder='Search...'
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        onSubmitEditing={fetchMovies}
+        right={() => null}
+      />
       <FlatList
         data={movies}
         keyExtractor={(item) => item['#IMDB_ID']}
@@ -31,6 +30,8 @@ const MoviesList: React.FC = () => {
           />
         )}
         contentContainerStyle={styles.listContainer}
+        refreshing={isLoading}
+        onRefresh={fetchMovies}
       />
     </View>
   );

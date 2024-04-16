@@ -26,7 +26,7 @@ class MovieSDK {
       const response: AxiosResponse<ApiResponse> = await axios.get(`${this.baseURL}/?q=`);
       return response.data?.description;
     } catch (error) {
-      throw new Error(`Failed to fetch random movies: ${error.message}`);
+      throw new Error(`Failed to fetch movies: ${error.message}`);
     }
   }
 
