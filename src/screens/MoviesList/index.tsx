@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import MovieSDK from '../../networking/MovieSDK';
 import { RootState } from '../../store';
 import { setRandomMovies } from '../../store/slices/movieSlice';
-
-const movieSDK = new MovieSDK('https://search.imdbot.workers.dev');
+import movieSDK from '../../networking/MovieSDK';
 
 const MoviesList: React.FC = () => {
 

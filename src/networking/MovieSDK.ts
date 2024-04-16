@@ -49,4 +49,7 @@ class MovieSDK {
   }
 }
 
-export default MovieSDK;
+// Create a global instance to access all across the app //
+const movieSDK = new MovieSDK('https://search.imdbot.workers.dev');
+
+export default movieSDK;
