@@ -1,39 +1,57 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 import { MovieCard } from '../../components';
 import useMovies from '../../hooks/useMovies';
+import colors from '../../common/colors';
 
 const MoviesList: React.FC = () => {
 
+  const navigation = useNavigation();
+
   const { isLoading, fetchMovies, searchQuery, setSearchQuery, movies } = useMovies();
 
-  return (
-    <View style={styles.container}>
-      <Searchbar
-        style={{ margin: 15 }}
-        placeholder='Search...'
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        onSubmitEditing={fetchMovies}
-        right={() => null}
-      />
-      <FlatList
-        data={movies}
-        keyExtractor={(item) => item['#IMDB_ID']}
-        renderItem={({ item }) => (
-          <MovieCard
-            title={item['#TITLE']}
-            posterPath={item['#IMG_POSTER']}
-            onPress={() => { }}
+  const renderHeader = useMemo(() => {
+    return (
+      <View style={styles.headerContainer}>
+        <SafeAreaView edges={['top']} />
+        <View style={styles.headerContentContainer}>
+          <Searchbar
+            style={{ flex: 1, marginHorizontal: 25 }}
+            placeholder='Search...'
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onSubmitEditing={fetchMovies}
+            right={() => null}
           />
-        )}
-        contentContainerStyle={styles.listContainer}
-        refreshing={isLoading}
-        onRefresh={fetchMovies}
-      />
-    </View>
+        </View>
+      </View>
+    );
+  }, [searchQuery]);
+
+  return (
+    <>
+      {renderHeader}
+      <View style={styles.container}>
+        <FlatList
+          data={movies}
+          keyExtractor={(item) => item['#IMDB_ID']}
+          renderItem={({ item }) => (
+            <MovieCard
+              title={item['#TITLE']}
+              posterPath={item['#IMG_POSTER']}
+              onPress={() => { }}
+            />
+          )}
+          contentContainerStyle={styles.listContainer}
+          refreshing={isLoading}
+          onRefresh={fetchMovies}
+        />
+      </View>
+    </>
   );
 };
 
@@ -45,5 +63,14 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingHorizontal: 15,
-  }
+  },
+  headerContainer: {
+    backgroundColor: colors.white,
+  },
+  headerContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 15,
+    paddingTop: 10,
+  },
 });
