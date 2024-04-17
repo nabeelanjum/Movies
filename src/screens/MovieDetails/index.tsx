@@ -42,48 +42,57 @@ const MovieDetails: React.FC = () => {
 
         {!isLoading && (
           <View style={styles.body}>
-            <AppText style={styles.descriptionText}>
-              {movieDetails?.description}
-            </AppText>
+            {!!movieDetails?.description && (
+              <AppText style={styles.descriptionText}>
+                {movieDetails?.description}
+              </AppText>
+            )}
 
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              contentContainerStyle={{ padding: 5 }}
-            >
-              {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
-            </ScrollView>
-
-            <View style={styles.sectionContainer}>
-              <AppText style={styles.sectionTitle}>Cast</AppText>
+            {!!movieDetails?.keywords?.length && (
               <ScrollView
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 contentContainerStyle={{ padding: 5 }}
+                style={styles.keywordsView}
               >
-                {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
+                {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
               </ScrollView>
-            </View>
+            )}
+
+            {!!movieDetails?.actors?.length && (
+              <View style={styles.sectionContainer}>
+                <AppText style={styles.sectionTitle}>Cast</AppText>
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  contentContainerStyle={{ padding: 5 }}
+                >
+                  {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
+                </ScrollView>
+              </View>
+            )}
 
             <View style={styles.sectionContainer}>
               <AppText style={styles.sectionTitle}>Rating</AppText>
-              <View>
-                <View style={styles.ratingView}>
-                  <OctIcons name='star-fill' color={colors.yellow} size={28} />
-                  <AppText style={styles.ratingText}>
-                    {movieDetails?.rating?.averageRating}
-                    <AppText color={colors.fontSecondary}>/10</AppText>
-                  </AppText>
-                </View>
+              <View style={styles.ratingView}>
+                <OctIcons name='star-fill' color={colors.yellow} size={28} />
+                <AppText style={styles.ratingText}>
+                  {movieDetails?.rating?.averageRating}
+                  <AppText color={colors.fontSecondary}>/10</AppText>
+                </AppText>
               </View>
-              <AppText style={[styles.sectionTitle, { fontSize: 18 }]}>Featured reviews</AppText>
-              <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                contentContainerStyle={{ padding: 5 }}
-              >
-                {movieDetails?.rating?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
-              </ScrollView>
+              {!!movieDetails?.rating?.reviews?.length && (
+                <View style={{ marginTop: 15 }}>
+                  <AppText style={[styles.sectionTitle, { fontSize: 18 }]}>Featured reviews</AppText>
+                  <ScrollView
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    contentContainerStyle={{ padding: 5 }}
+                  >
+                    {movieDetails?.rating?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
+                  </ScrollView>
+                </View>
+              )}
             </View>
           </View>
         )}
@@ -122,18 +131,18 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: colors.fontSecondary,
-    marginVertical: 15,
+    marginTop: 20,
   },
   keywordsView: {
-
+    marginTop: 20,
   },
   sectionContainer: {
-    marginTop: 10,
+    marginTop: 20,
   },
   sectionTitle: {
     fontSize: 22,
     fontWeight: '600',
-    marginVertical: 8,
+    marginBottom: 8,
   },
   ratingView: {
     flexDirection: 'row',

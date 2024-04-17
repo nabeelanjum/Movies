@@ -29,7 +29,7 @@ export default ActorCard;
 const styles = StyleSheet.create({
   container: {
     width: 100,
-    height: 200,
+    height: 190,
     marginRight: 8,
   },
   namesView: {
