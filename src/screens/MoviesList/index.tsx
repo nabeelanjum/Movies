@@ -16,6 +16,7 @@ const MoviesList: React.FC = () => {
   const { isLoading, fetchMovies, searchQuery, setSearchQuery, movies } = useMovies();
 
   const renderHeader = useMemo(() => {
+    // We could also have searchBar as ListHeaderComponent but to me it looks better in the Header itself //
     return (
       <View style={styles.headerContainer}>
         <SafeAreaView edges={['top']} />
