@@ -71,7 +71,7 @@ class MovieSDK {
       }));
       const reviews = movieData.main?.featuredReviews?.edges?.map((item) => ({
         date: item.node?.submissionDate,
-        text: item.node?.text?.originalText.plaidHtml,
+        text: item.node?.text?.originalText?.plaidHtml?.split('<br/>')?.join('\n'),
         summary: item.node?.summary?.originalText,
       }));
       const details = {

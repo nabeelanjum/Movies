@@ -1,10 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { Actor, Movie } from '../../networking/MovieSDK';
+import { Actor, Movie, Review } from '../../networking/MovieSDK';
 import useMovieDetails from '../../hooks/useMovieDetails';
 import colors from '../../common/colors';
-import { ActorCard, AppText, KeywordChip } from '../../components';
+import { ActorCard, AppText, KeywordChip, ReviewCard } from '../../components';
 
 const MovieDetails: React.FC = () => {
 
@@ -16,7 +16,7 @@ const MovieDetails: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleView}>
           <AppText style={styles.title}>{movie['#TITLE']}</AppText>
           <AppText style={styles.subTitle}>{movie['#YEAR']}</AppText>
@@ -40,10 +40,8 @@ const MovieDetails: React.FC = () => {
             {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
           </ScrollView>
 
-          <View style={styles.castView}>
-            <AppText style={styles.castText}>
-              Cast
-            </AppText>
+          <View style={styles.sectionContainer}>
+            <AppText style={styles.sectionTitle}>Cast</AppText>
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal
@@ -52,8 +50,18 @@ const MovieDetails: React.FC = () => {
               {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
             </ScrollView>
           </View>
-        </View>
 
+          <View style={styles.sectionContainer}>
+            <AppText style={styles.sectionTitle}>Featured Reviews</AppText>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              contentContainerStyle={{ padding: 5 }}
+            >
+              {movieDetails?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
+            </ScrollView>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -65,6 +73,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  scrollContainer: {
+    paddingBottom: 50,
   },
   titleView: {
     margin: 15,
@@ -91,10 +102,10 @@ const styles = StyleSheet.create({
   keywordsView: {
 
   },
-  castView: {
+  sectionContainer: {
     marginTop: 10,
   },
-  castText: {
+  sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
     marginVertical: 8,
