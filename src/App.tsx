@@ -1,8 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Provider } from 'react-redux';
+import Toast from 'react-native-toast-message';
 import RootNavigation from './navigation';
 import store from './store';
+import { toastConfigs } from './common/constants';
 
 const App: React.FC = () => {
   return (
@@ -10,6 +12,7 @@ const App: React.FC = () => {
       <Provider store={store}>
         <RootNavigation />
       </Provider>
+      <Toast config={toastConfigs} />
     </View>
   );
 };
