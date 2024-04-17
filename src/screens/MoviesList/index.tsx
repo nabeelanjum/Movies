@@ -7,6 +7,7 @@ import { MovieCard } from '../../components';
 import useMovies from '../../hooks/useMovies';
 import colors from '../../common/colors';
 import { MainStackRoutes } from '../../navigation/routes';
+import ListEmptyComponent from './ListEmptyComponent';
 
 const MoviesList: React.FC = () => {
 
@@ -51,6 +52,7 @@ const MoviesList: React.FC = () => {
           contentContainerStyle={[styles.listContainer, { paddingBottom: bottomSafe + 15 }]}
           refreshing={isLoading}
           onRefresh={fetchMovies}
+          ListEmptyComponent={() => !isLoading && <ListEmptyComponent />}
         />
       </View>
     </>
