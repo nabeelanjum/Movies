@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   posterImage: {
     width: '100%',
     height: 220,
+    backgroundColor: colors.imagePlaceholder,
   },
   body: {
     paddingHorizontal: 15,

@@ -38,5 +38,6 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 140,
+    backgroundColor: colors.imagePlaceholder,
   },
 });
