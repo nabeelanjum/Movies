@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Movie } from '../../networking/MovieSDK';
+import { Movie, MovieDetails } from '../../networking/MovieSDK';
 
 interface MovieState {
   movies: Movie[];
-  selectedMovie: Movie | null;
+  selectedMovie: MovieDetails | null;
 }
 
 const initialState: MovieState = {
@@ -18,7 +18,7 @@ const movieSlice = createSlice({
     setMovies(state, action: PayloadAction<Movie[]>) {
       state.movies = action.payload;
     },
-    setSelectedMovie(state, action: PayloadAction<Movie | null>) {
+    setSelectedMovie(state, action: PayloadAction<MovieDetails | null>) {
       state.selectedMovie = action.payload;
     },
   },

@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MovieCard } from '../../components';
 import useMovies from '../../hooks/useMovies';
 import colors from '../../common/colors';
+import { MainStackRoutes } from '../../navigation/routes';
 
 const MoviesList: React.FC = () => {
 
@@ -24,7 +25,7 @@ const MoviesList: React.FC = () => {
             placeholder='Search...'
             value={searchQuery}
             onChangeText={setSearchQuery}
-            onSubmitEditing={fetchMovies}
+            onBlur={fetchMovies}
             right={() => null}
           />
         </View>
@@ -43,7 +44,7 @@ const MoviesList: React.FC = () => {
             <MovieCard
               title={item['#TITLE']}
               posterPath={item['#IMG_POSTER']}
-              onPress={() => { }}
+              onPress={() => navigation.navigate(MainStackRoutes.MovieDetails, { movie: item })}
             />
           )}
           contentContainerStyle={styles.listContainer}

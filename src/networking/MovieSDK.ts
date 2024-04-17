@@ -8,6 +8,32 @@ export interface Movie {
   '#YEAR': number;
 }
 
+// Just the things that are required (since API docs are not properly available) //
+export interface MovieDetails {
+  fake: Object;
+  imdbId: string;
+  main: {
+    featuredReviews: {
+      edges: any[]
+    }
+  };
+  short: {
+    description: string;
+    actor: any[];
+    keywords: string;
+
+  };
+  storyLine: Object;
+  top: {
+    featuredReviews: {
+      edges: any[]
+    },
+    images: {
+      edges: any[]
+    }
+  };
+}
+
 interface ApiResponse {
   ok: string;
   description: Movie[];
@@ -39,9 +65,9 @@ class MovieSDK {
     }
   }
 
-  async getMovieDetails(id: string): Promise<ApiResponse> {
+  async getMovieDetails(id: string): Promise<MovieDetails> {
     try {
-      const response: AxiosResponse<ApiResponse> = await axios.get(`${this.baseURL}/?tt=${id}`);
+      const response: AxiosResponse<MovieDetails> = await axios.get(`${this.baseURL}/?tt=${id}`);
       return response.data;
     } catch (error) {
       throw new Error(`Failed to get movie details: ${error.message}`);

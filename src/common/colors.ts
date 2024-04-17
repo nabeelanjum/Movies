@@ -3,5 +3,5 @@ export default {
   fontSecondary: '#8F8F8F',
   white: '#fff',
   buttonPrimary: '#61C3F2',
-  overlay: 'rgba(0, 0, 0, 0.35)',
+  overlay: 'rgba(0, 0, 0, 0.4)',
 }

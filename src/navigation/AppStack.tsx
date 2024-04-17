@@ -6,9 +6,16 @@ const Stack = createStackNavigator();
 
 const AppStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={MainStackRoutes.Home} component={MoviesList} />
-      <Stack.Screen name={MainStackRoutes.MovieDetails} component={MovieDetails} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name={MainStackRoutes.Home}
+        component={MoviesList}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={MainStackRoutes.MovieDetails}
+        component={MovieDetails}
+      />
     </Stack.Navigator>
   );
 }
