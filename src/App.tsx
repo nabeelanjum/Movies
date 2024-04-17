@@ -6,6 +6,8 @@ import RootNavigation from './navigation';
 import store from './store';
 import { toastConfigs } from './common/constants';
 
+// TODO: separate out string literals to add localization later on //
+
 const App: React.FC = () => {
   return (
     <View style={{ flex: 1 }}>

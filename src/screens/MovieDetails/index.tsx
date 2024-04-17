@@ -13,6 +13,7 @@ const MovieDetails: React.FC = () => {
   const route = useRoute();
   const bottomSafe = useSafeAreaInsets().bottom;
 
+  // TODO: add param types //
   const movie: Movie = route?.params?.movie;
 
   const { isLoading, movieDetails } = useMovieDetails(movie['#IMDB_ID']);

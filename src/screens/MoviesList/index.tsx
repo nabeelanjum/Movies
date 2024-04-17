@@ -21,7 +21,7 @@ const MoviesList: React.FC = () => {
         <SafeAreaView edges={['top']} />
         <View style={styles.headerContentContainer}>
           <Searchbar
-            style={{ flex: 1, marginHorizontal: 25 }}
+            style={styles.searchBarContainer}
             placeholder='Search...'
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -73,5 +73,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 15,
     paddingTop: 10,
+  },
+  searchBarContainer: {
+    flex: 1,
+    marginHorizontal: 25,
   },
 });

@@ -18,6 +18,8 @@ const useMovies = () => {
     fetchMovies();
   }, []);
 
+  // TODO: add saga or thunk and make action creators to separate out invoking APIs //
+
   const fetchMovies = useCallback(async () => {
     try {
       setLoading(true);

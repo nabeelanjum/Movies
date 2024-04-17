@@ -48,6 +48,9 @@ class MovieSDK {
     this.baseURL = baseURL;
   }
 
+  // API doesn't provides proper docs and also the response struct is different in different endpoints
+  // so error handling is not per best standards
+
   async fetchMovies(): Promise<Movie[]> {
     try {
       const response: AxiosResponse<ApiResponse> = await axios.get(`${this.baseURL}/?q=''`);
@@ -80,6 +83,7 @@ class MovieSDK {
     try {
       const response: AxiosResponse = await axios.get(`${this.baseURL}/?tt=${id}`);
       const movieData = response.data;
+      // TODO: make helper funcs to simplify these response objects //
       const actors = movieData.main?.cast?.edges?.map((item) => ({
         originalName: item.node?.name?.nameText?.text,
         castName: item.node?.characters?.[0]?.name,
@@ -108,7 +112,7 @@ class MovieSDK {
   }
 }
 
-// Create a global instance to access all across the app //
+// Creating a global instance to access all across the app //
 const movieSDK = new MovieSDK('https://search.imdbot.workers.dev');
 
 export default movieSDK;
