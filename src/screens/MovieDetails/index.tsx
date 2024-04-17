@@ -1,10 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { Movie } from '../../networking/MovieSDK';
+import { Actor, Movie } from '../../networking/MovieSDK';
 import useMovieDetails from '../../hooks/useMovieDetails';
 import colors from '../../common/colors';
-import { AppText } from '../../components';
+import { ActorCard, AppText, KeywordChip } from '../../components';
 
 const MovieDetails: React.FC = () => {
 
@@ -27,28 +27,31 @@ const MovieDetails: React.FC = () => {
           style={styles.posterImage}
         />
 
-        <AppText style={styles.descriptionText}>
-          {movieDetails?.short.description}
-        </AppText>
-
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          contentContainerStyle={{ padding: 5 }}
-        >
-          {movieDetails?.short?.keywords?.split(',')?.map((keyword: string) => (
-            <View style={styles.keywordChip}>
-              <AppText>{keyword}</AppText>
-            </View>
-          ))}
-        </ScrollView>
-
-        <View>
-          <AppText>
-            Cast
+        <View style={styles.body}>
+          <AppText style={styles.descriptionText}>
+            {movieDetails?.description}
           </AppText>
-          <ScrollView horizontal>
+
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            contentContainerStyle={{ padding: 5 }}
+          >
+            {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
           </ScrollView>
+
+          <View style={styles.castView}>
+            <AppText style={styles.castText}>
+              Cast
+            </AppText>
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              contentContainerStyle={{ padding: 5 }}
+            >
+              {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
+            </ScrollView>
+          </View>
         </View>
 
       </ScrollView>
@@ -61,11 +64,13 @@ export default MovieDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
     backgroundColor: colors.white,
   },
+  titleView: {
+    margin: 15,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: '600',
   },
   subTitle: {
@@ -74,10 +79,10 @@ const styles = StyleSheet.create({
   },
   posterImage: {
     width: '100%',
-    height: 200,
+    height: 220,
   },
-  titleView: {
-    marginVertical: 20,
+  body: {
+    paddingHorizontal: 15,
   },
   descriptionText: {
     color: colors.fontSecondary,
@@ -86,17 +91,12 @@ const styles = StyleSheet.create({
   keywordsView: {
 
   },
-  keywordChip: {
-    padding: 8,
-    borderRadius: 4,
-    shadowOpacity: 0.1,
-    backgroundColor: colors.white,
-    shadowOffset: { width: 0, height: 0 },
-    // borderWidth: StyleSheet.hairlineWidth,
-    // borderColor: colors.fontSecondary,
-    marginRight: 12,
-  },
   castView: {
-
+    marginTop: 10,
   },
+  castText: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginVertical: 8,
+  }
 });

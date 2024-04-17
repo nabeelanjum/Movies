@@ -8,36 +8,31 @@ export interface Movie {
   '#YEAR': number;
 }
 
-// Just the things that are required (since API docs are not properly available) //
-export interface MovieDetails {
-  fake: Object;
-  imdbId: string;
-  main: {
-    featuredReviews: {
-      edges: any[]
-    }
-  };
-  short: {
-    description: string;
-    actor: any[];
-    keywords: string;
-
-  };
-  storyLine: Object;
-  top: {
-    featuredReviews: {
-      edges: any[]
-    },
-    images: {
-      edges: any[]
-    }
-  };
-}
-
 interface ApiResponse {
   ok: string;
   description: Movie[];
   error_code: number;
+}
+
+// Just the things that are being used on FE (since API docs are not properly available) //
+
+export type Actor = {
+  originalName: string;
+  castName: string;
+  image: string;
+}
+
+export type Review = {
+  date: string;
+  text: string;
+  summary: string;
+}
+
+export interface MovieDetails {
+  description: string;
+  keywords: string[];
+  reviews: Review[];
+  actors: Actor[];
 }
 
 class MovieSDK {
@@ -67,8 +62,25 @@ class MovieSDK {
 
   async getMovieDetails(id: string): Promise<MovieDetails> {
     try {
-      const response: AxiosResponse<MovieDetails> = await axios.get(`${this.baseURL}/?tt=${id}`);
-      return response.data;
+      const response: AxiosResponse = await axios.get(`${this.baseURL}/?tt=${id}`);
+      const movieData = response.data;
+      const actors = movieData.main?.cast?.edges?.map((item) => ({
+        originalName: item.node?.name?.nameText?.text,
+        castName: item.node?.characters?.[0]?.name,
+        image: item.node?.name?.primaryImage?.url,
+      }));
+      const reviews = movieData.main?.featuredReviews?.edges?.map((item) => ({
+        date: item.node?.submissionDate,
+        text: item.node?.text?.originalText.plaidHtml,
+        summary: item.node?.summary?.originalText,
+      }));
+      const details = {
+        description: movieData.short?.description,
+        keywords: movieData.short?.keywords?.split(','),
+        reviews,
+        actors,
+      }
+      return details;
     } catch (error) {
       throw new Error(`Failed to get movie details: ${error.message}`);
     }
