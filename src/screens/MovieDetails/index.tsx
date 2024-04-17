@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import OctIcons from 'react-native-vector-icons/Octicons';
 import { Actor, Movie, Review } from '../../networking/MovieSDK';
 import useMovieDetails from '../../hooks/useMovieDetails';
 import colors from '../../common/colors';
@@ -52,13 +53,23 @@ const MovieDetails: React.FC = () => {
           </View>
 
           <View style={styles.sectionContainer}>
-            <AppText style={styles.sectionTitle}>Featured Reviews</AppText>
+            <AppText style={styles.sectionTitle}>Rating</AppText>
+            <View>
+              <View style={styles.ratingView}>
+                <OctIcons name='star-fill' color={colors.yellow} size={28} />
+                <AppText style={styles.ratingText}>
+                  {movieDetails?.rating?.averageRating}
+                  <AppText color={colors.fontSecondary}>/10</AppText>
+                </AppText>
+              </View>
+            </View>
+            <AppText style={[styles.sectionTitle, { fontSize: 18 }]}>Featured reviews</AppText>
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal
               contentContainerStyle={{ padding: 5 }}
             >
-              {movieDetails?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
+              {movieDetails?.rating?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
             </ScrollView>
           </View>
         </View>
@@ -106,8 +117,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '600',
     marginVertical: 8,
+  },
+  ratingView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    marginStart: 5,
+    fontSize: 28,
   }
 });

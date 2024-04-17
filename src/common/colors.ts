@@ -4,4 +4,5 @@ export default {
   white: '#fff',
   buttonPrimary: '#61C3F2',
   overlay: 'rgba(0, 0, 0, 0.4)',
+  yellow: 'rgb(245, 197, 25)',
 }

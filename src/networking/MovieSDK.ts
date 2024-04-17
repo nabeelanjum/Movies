@@ -26,12 +26,17 @@ export type Review = {
   date: string;
   text: string;
   summary: string;
+  rating: number;
 }
 
 export interface MovieDetails {
   description: string;
   keywords: string[];
-  reviews: Review[];
+  rating: {
+    averageRating: number,
+    voteCount: number,
+    reviews: Review[]
+  };
   actors: Actor[];
 }
 
@@ -64,6 +69,7 @@ class MovieSDK {
     try {
       const response: AxiosResponse = await axios.get(`${this.baseURL}/?tt=${id}`);
       const movieData = response.data;
+      console.log(movieData.top?.featuredReviews?.edges);
       const actors = movieData.main?.cast?.edges?.map((item) => ({
         originalName: item.node?.name?.nameText?.text,
         castName: item.node?.characters?.[0]?.name,
@@ -73,12 +79,17 @@ class MovieSDK {
         date: item.node?.submissionDate,
         text: item.node?.text?.originalText?.plaidHtml?.split('<br/>')?.join('\n'),
         summary: item.node?.summary?.originalText,
+        rating: item.node?.authorRating,
       }));
-      const details = {
+      const details: MovieDetails = {
         description: movieData.short?.description,
         keywords: movieData.short?.keywords?.split(','),
-        reviews,
         actors,
+        rating: {
+          averageRating: movieData.top?.ratingsSummary?.aggregateRating,
+          voteCount: movieData.top?.ratingsSummary?.voteCount,
+          reviews
+        }
       }
       return details;
     } catch (error) {

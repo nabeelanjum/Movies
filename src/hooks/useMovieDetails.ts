@@ -13,7 +13,7 @@ const useMovieDetails = (id: string) => {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // fetchMovieDetails(id);
+    fetchMovieDetails(id);
   }, [id]);
 
   const fetchMovieDetails = useCallback(async (id: string) => {
