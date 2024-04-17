@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OctIcons from 'react-native-vector-icons/Octicons';
 import { Actor, Movie, Review } from '../../networking/MovieSDK';
 import useMovieDetails from '../../hooks/useMovieDetails';
@@ -10,14 +11,23 @@ import { ActorCard, AppText, KeywordChip, ReviewCard } from '../../components';
 const MovieDetails: React.FC = () => {
 
   const route = useRoute();
+  const bottomSafe = useSafeAreaInsets().bottom;
 
   const movie: Movie = route?.params?.movie;
 
   const { isLoading, movieDetails } = useMovieDetails(movie['#IMDB_ID']);
 
+  const loadingIndicator = useMemo(() => {
+    return isLoading && (
+      <View style={{ marginTop: 20 }}>
+        <ActivityIndicator size='large' color={colors.fontSecondary} />
+      </View>
+    );
+  }, [isLoading]);
+
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView contentContainerStyle={{ paddingBottom: bottomSafe + 15 }}>
         <View style={styles.titleView}>
           <AppText style={styles.title}>{movie['#TITLE']}</AppText>
           <AppText style={styles.subTitle}>{movie['#YEAR']}</AppText>
@@ -28,51 +38,55 @@ const MovieDetails: React.FC = () => {
           style={styles.posterImage}
         />
 
-        <View style={styles.body}>
-          <AppText style={styles.descriptionText}>
-            {movieDetails?.description}
-          </AppText>
+        {loadingIndicator}
 
-          <ScrollView
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            contentContainerStyle={{ padding: 5 }}
-          >
-            {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
-          </ScrollView>
+        {!isLoading && (
+          <View style={styles.body}>
+            <AppText style={styles.descriptionText}>
+              {movieDetails?.description}
+            </AppText>
 
-          <View style={styles.sectionContainer}>
-            <AppText style={styles.sectionTitle}>Cast</AppText>
             <ScrollView
               showsHorizontalScrollIndicator={false}
               horizontal
               contentContainerStyle={{ padding: 5 }}
             >
-              {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
+              {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
             </ScrollView>
-          </View>
 
-          <View style={styles.sectionContainer}>
-            <AppText style={styles.sectionTitle}>Rating</AppText>
-            <View>
-              <View style={styles.ratingView}>
-                <OctIcons name='star-fill' color={colors.yellow} size={28} />
-                <AppText style={styles.ratingText}>
-                  {movieDetails?.rating?.averageRating}
-                  <AppText color={colors.fontSecondary}>/10</AppText>
-                </AppText>
-              </View>
+            <View style={styles.sectionContainer}>
+              <AppText style={styles.sectionTitle}>Cast</AppText>
+              <ScrollView
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                contentContainerStyle={{ padding: 5 }}
+              >
+                {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
+              </ScrollView>
             </View>
-            <AppText style={[styles.sectionTitle, { fontSize: 18 }]}>Featured reviews</AppText>
-            <ScrollView
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              contentContainerStyle={{ padding: 5 }}
-            >
-              {movieDetails?.rating?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
-            </ScrollView>
+
+            <View style={styles.sectionContainer}>
+              <AppText style={styles.sectionTitle}>Rating</AppText>
+              <View>
+                <View style={styles.ratingView}>
+                  <OctIcons name='star-fill' color={colors.yellow} size={28} />
+                  <AppText style={styles.ratingText}>
+                    {movieDetails?.rating?.averageRating}
+                    <AppText color={colors.fontSecondary}>/10</AppText>
+                  </AppText>
+                </View>
+              </View>
+              <AppText style={[styles.sectionTitle, { fontSize: 18 }]}>Featured reviews</AppText>
+              <ScrollView
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                contentContainerStyle={{ padding: 5 }}
+              >
+                {movieDetails?.rating?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
+              </ScrollView>
+            </View>
           </View>
-        </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -86,7 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   scrollContainer: {
-    paddingBottom: 50,
   },
   titleView: {
     margin: 15,

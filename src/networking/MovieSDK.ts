@@ -12,6 +12,7 @@ interface ApiResponse {
   ok: string;
   description: Movie[];
   error_code: number;
+  usage?: string;
 }
 
 // Just the things that are being used on FE (since API docs are not properly available) //
@@ -49,7 +50,12 @@ class MovieSDK {
 
   async fetchMovies(): Promise<Movie[]> {
     try {
-      const response: AxiosResponse<ApiResponse> = await axios.get(`${this.baseURL}/?q=`);
+      const response: AxiosResponse<ApiResponse> = await axios.get(`${this.baseURL}/?q=''`);
+      if (response.data?.error_code !== 200)
+        throw {
+          code: response.data?.error_code,
+          message: response.data?.usage || 'internal API error',
+        };
       return response.data?.description;
     } catch (error) {
       throw new Error(`Failed to fetch movies: ${error.message}`);
@@ -59,6 +65,11 @@ class MovieSDK {
   async searchMovies(query: string): Promise<Movie[]> {
     try {
       const response: AxiosResponse<ApiResponse> = await axios.get(`${this.baseURL}/?q=${query}`);
+      if (response.data?.error_code !== 200)
+        throw {
+          code: response.data?.error_code,
+          message: response.data?.usage || 'internal API error',
+        };
       return response.data?.description;
     } catch (error) {
       throw new Error(`Failed to search movies: ${error.message}`);
@@ -69,7 +80,6 @@ class MovieSDK {
     try {
       const response: AxiosResponse = await axios.get(`${this.baseURL}/?tt=${id}`);
       const movieData = response.data;
-      console.log(movieData.top?.featuredReviews?.edges);
       const actors = movieData.main?.cast?.edges?.map((item) => ({
         originalName: item.node?.name?.nameText?.text,
         castName: item.node?.characters?.[0]?.name,

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
 import { RootState } from '../store';
 import { setMovies } from '../store/slices/movieSlice';
 import movieSDK from '../networking/MovieSDK';
@@ -25,7 +26,11 @@ const useMovies = () => {
         : await movieSDK.fetchMovies();
       dispatch(setMovies(movies));
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      Toast.show({
+        type: 'error',
+        text1: e.toString()
+      });
     } finally {
       setLoading(false);
     }

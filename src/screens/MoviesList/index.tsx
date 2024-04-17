@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-
 import { MovieCard } from '../../components';
 import useMovies from '../../hooks/useMovies';
 import colors from '../../common/colors';
@@ -12,6 +11,7 @@ import { MainStackRoutes } from '../../navigation/routes';
 const MoviesList: React.FC = () => {
 
   const navigation = useNavigation();
+  const bottomSafe = useSafeAreaInsets().bottom;
 
   const { isLoading, fetchMovies, searchQuery, setSearchQuery, movies } = useMovies();
 
@@ -47,7 +47,7 @@ const MoviesList: React.FC = () => {
               onPress={() => navigation.navigate(MainStackRoutes.MovieDetails, { movie: item })}
             />
           )}
-          contentContainerStyle={styles.listContainer}
+          contentContainerStyle={[styles.listContainer, { paddingBottom: bottomSafe + 15 }]}
           refreshing={isLoading}
           onRefresh={fetchMovies}
         />
