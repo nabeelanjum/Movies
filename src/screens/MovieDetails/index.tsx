@@ -54,18 +54,24 @@ const MovieDetails: React.FC = () => {
         onScroll={(e) => handleScroll(e)}
       >
 
-        <View>
-          <Animated.View style={[styles.titleView, titleViewAnimatedStyle]}>
-            <AppText style={styles.title}>{movie['#TITLE']}</AppText>
-            <AppText style={styles.subTitle}>{movie['#YEAR']}</AppText>
-          </Animated.View>
+        <View style={[styles.titleView]}>
+          <AppText style={styles.title}>{movie['#TITLE']}</AppText>
+          <AppText style={styles.subTitle}>{movie['#YEAR']}</AppText>
         </View>
 
-        <Image
+        <ImageBackground
           source={{ uri: movie['#IMG_POSTER'] }}
           style={styles.posterImage}
           resizeMode='cover'
-        />
+        >
+          <Animated.View style={[styles.posterOverlay, posterOverlayAnimatedStyle]}>
+            <Overlay />
+            <View style={[styles.titleView]}>
+              <AppText style={[styles.title, { color: colors.white }]}>{movie['#TITLE']}</AppText>
+              <AppText style={[styles.subTitle, { color: colors.white }]}>{movie['#YEAR']}</AppText>
+            </View>
+          </Animated.View>
+        </ImageBackground>
 
         {loadingIndicator}
 
