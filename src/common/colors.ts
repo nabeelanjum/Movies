@@ -3,8 +3,8 @@
 export default {
   black: '#000',
   darkBackground: 'rgb(30, 30, 30)',
-  fontPrimary: '#FFF',
-  fontSecondary: 'rgb(180, 180, 180)',
+  fontPrimary: '#000',
+  fontSecondary: '#8F8F8F',
   white: '#fff',
   buttonPrimary: '#61C3F2',
   overlay: 'rgba(0, 0, 0, 0.35)',

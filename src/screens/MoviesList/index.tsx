@@ -66,13 +66,12 @@ export default MoviesList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.black,
   },
   listContainer: {
     paddingHorizontal: 15,
   },
   headerContainer: {
-    backgroundColor: colors.darkBackground,
+    backgroundColor: colors.white,
   },
   headerContentContainer: {
     flexDirection: 'row',

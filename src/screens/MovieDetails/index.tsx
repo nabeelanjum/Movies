@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useMemo } from 'react';
-import { ActivityIndicator, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Image, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OctIcons from 'react-native-vector-icons/Octicons';
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -39,6 +39,9 @@ const MovieDetails: React.FC = () => {
     ),
   }));
 
+  const titleViewAnimatedStyle = useAnimatedStyle(() => ({
+  }));
+
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollOffsetY.value = event.nativeEvent.contentOffset.y;
   };
@@ -47,27 +50,22 @@ const MovieDetails: React.FC = () => {
     <View style={styles.container}>
       <ScrollView
         stickyHeaderIndices={[1]}
-        contentContainerStyle={{ paddingBottom: bottomSafe + 15, paddingTop: topSafe + 30 }}
+        contentContainerStyle={{ paddingBottom: bottomSafe + 15 }}
         onScroll={(e) => handleScroll(e)}
       >
-        <View style={styles.titleView}>
-          <AppText style={styles.title}>{movie['#TITLE']}</AppText>
-          <AppText style={styles.subTitle}>{movie['#YEAR']}</AppText>
+
+        <View>
+          <Animated.View style={[styles.titleView, titleViewAnimatedStyle]}>
+            <AppText style={styles.title}>{movie['#TITLE']}</AppText>
+            <AppText style={styles.subTitle}>{movie['#YEAR']}</AppText>
+          </Animated.View>
         </View>
 
-        <ImageBackground
+        <Image
           source={{ uri: movie['#IMG_POSTER'] }}
           style={styles.posterImage}
           resizeMode='cover'
-        >
-          <Animated.View style={[styles.posterOverlay, posterOverlayAnimatedStyle]}>
-            <Overlay />
-            <View style={styles.titleView}>
-              <AppText style={[styles.title, { color: colors.white }]}>{movie['#TITLE']}</AppText>
-              <AppText style={[styles.subTitle, { color: colors.white }]}>{movie['#YEAR']}</AppText>
-            </View>
-          </Animated.View>
-        </ImageBackground>
+        />
 
         {loadingIndicator}
 
@@ -137,7 +135,7 @@ export default MovieDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.darkBackground,
+    backgroundColor: colors.white,
   },
   scrollContainer: {
   },
@@ -159,7 +157,6 @@ const styles = StyleSheet.create({
   },
   posterOverlay: {
     flex: 1,
-    justifyContent: 'flex-end',
   },
   body: {
     paddingHorizontal: 15,
