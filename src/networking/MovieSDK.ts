@@ -31,6 +31,7 @@ export type Review = {
 }
 
 export interface MovieDetails {
+  id: string;
   description: string;
   keywords: string[];
   rating: {
@@ -96,6 +97,7 @@ class MovieSDK {
         rating: item.node?.authorRating,
       })) ?? [];
       const details: MovieDetails = {
+        id,
         description: movieData.short?.description,
         keywords: movieData.short?.keywords?.split(','),
         actors,

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -50,8 +50,9 @@ const MoviesList: React.FC = () => {
             />
           )}
           contentContainerStyle={[styles.listContainer, { paddingBottom: bottomSafe + 15 }]}
-          refreshing={isLoading}
-          onRefresh={fetchMovies}
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={fetchMovies} tintColor={colors.themePrimary} />
+          }
           ListEmptyComponent={() => !isLoading && <ListEmptyComponent />}
         />
       </View>
