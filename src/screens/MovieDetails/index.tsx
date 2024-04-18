@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useMemo } from 'react';
-import { ActivityIndicator, Image, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import OctIcons from 'react-native-vector-icons/Octicons';
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
@@ -37,9 +37,6 @@ const MovieDetails: React.FC = () => {
       [0, 1],
       Extrapolation.CLAMP
     ),
-  }));
-
-  const titleViewAnimatedStyle = useAnimatedStyle(() => ({
   }));
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
