@@ -56,7 +56,7 @@ const MovieDetails: React.FC = () => {
                 contentContainerStyle={{ padding: 5 }}
                 style={styles.keywordsView}
               >
-                {movieDetails?.keywords?.map((keyword: string) => <KeywordChip word={keyword} />)}
+                {movieDetails?.keywords?.map((keyword, index) => <KeywordChip key={index.toString()} word={keyword} />)}
               </ScrollView>
             )}
 
@@ -68,7 +68,7 @@ const MovieDetails: React.FC = () => {
                   horizontal
                   contentContainerStyle={{ padding: 5 }}
                 >
-                  {movieDetails?.actors?.map((actor: Actor) => <ActorCard actor={actor} />)}
+                  {movieDetails?.actors?.map((actor, index) => <ActorCard key={index.toString()} actor={actor} />)}
                 </ScrollView>
               </View>
             )}
@@ -76,7 +76,7 @@ const MovieDetails: React.FC = () => {
             <View style={styles.sectionContainer}>
               <AppText style={styles.sectionTitle}>Rating</AppText>
               <View style={styles.ratingView}>
-                <OctIcons name='star-fill' color={colors.yellow} size={28} />
+                <OctIcons name='star-fill' color={colors.themePrimary} size={28} />
                 <AppText style={styles.ratingText}>
                   {movieDetails?.rating?.averageRating}
                   <AppText color={colors.fontSecondary}>/10</AppText>
@@ -90,7 +90,7 @@ const MovieDetails: React.FC = () => {
                     horizontal
                     contentContainerStyle={{ padding: 5 }}
                   >
-                    {movieDetails?.rating?.reviews?.map((review: Review) => <ReviewCard review={review} />)}
+                    {movieDetails?.rating?.reviews?.map((review, index) => <ReviewCard key={index.toString()} review={review} />)}
                   </ScrollView>
                 </View>
               )}

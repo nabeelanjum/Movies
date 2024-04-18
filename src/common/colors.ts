@@ -6,6 +6,6 @@ export default {
   white: '#fff',
   buttonPrimary: '#61C3F2',
   overlay: 'rgba(0, 0, 0, 0.35)',
-  yellow: 'rgb(245, 197, 25)',
+  themePrimary: 'rgb(245, 197, 25)',
   imagePlaceholder: 'rgb(200, 200, 200)',
 }

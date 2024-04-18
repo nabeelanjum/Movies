@@ -88,13 +88,13 @@ class MovieSDK {
         originalName: item.node?.name?.nameText?.text,
         castName: item.node?.characters?.[0]?.name,
         image: item.node?.name?.primaryImage?.url,
-      }));
+      })) ?? [];
       const reviews = movieData.main?.featuredReviews?.edges?.map((item) => ({
         date: item.node?.submissionDate,
         text: item.node?.text?.originalText?.plaidHtml?.split('<br/>')?.join('\n'),
         summary: item.node?.summary?.originalText,
         rating: item.node?.authorRating,
-      }));
+      })) ?? [];
       const details: MovieDetails = {
         description: movieData.short?.description,
         keywords: movieData.short?.keywords?.split(','),
