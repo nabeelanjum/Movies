@@ -16,7 +16,7 @@ const AppStack = () => {
       <Stack.Screen
         name={MainStackRoutes.MovieDetails}
         component={MovieDetails}
-        options={{ title: '' }}
+        options={{ title: '', headerTransparent: true }}
       />
     </Stack.Navigator>
   );

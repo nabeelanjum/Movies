@@ -29,6 +29,7 @@ const MoviesList: React.FC = () => {
             onChangeText={setSearchQuery}
             onBlur={fetchMovies}
             right={() => null}
+            autoCorrect={false}
           />
         </View>
       </View>
@@ -65,12 +66,13 @@ export default MoviesList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.black,
   },
   listContainer: {
     paddingHorizontal: 15,
   },
   headerContainer: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.darkBackground,
   },
   headerContentContainer: {
     flexDirection: 'row',

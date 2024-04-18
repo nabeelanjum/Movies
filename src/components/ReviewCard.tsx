@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import colors from '../common/colors';
 import { AppText } from '.';
 import { Review } from '../networking/MovieSDK';
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: 250,
     marginRight: 8,
     padding: 10,
-    backgroundColor: colors.white,
+    backgroundColor: colors.black,
     shadowOpacity: 0.2,
     borderRadius: 8,
     shadowOffset: { width: 0, height: 0 },

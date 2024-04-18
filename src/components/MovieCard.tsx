@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     justifyContent: 'flex-end',
+    backgroundColor: colors.imagePlaceholder,
   },
   title: {
     margin: 20,
